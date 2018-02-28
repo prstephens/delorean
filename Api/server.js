@@ -8,10 +8,10 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var isReachable = require('is-reachable');
+var isReachable = require('is-port-reachable');
 var rexec = require('remote-exec');
 var request = require('request');
-var config = require('.../config/config.json');
+var config = require('./config/config.json');
 
 
 // configure app to use bodyParser()
@@ -82,7 +82,7 @@ router.post('/timemachine/off', function(req, res, next) {
 
 
 router.get('/timemachine/ison', function(req, res, next) {
-	isReachable('timemachine.lan:3389')
+	isReachable(3389, {host: 'timemachine.lan'})
 	.then(reachable => {
 		return res.json({ ison: reachable});
 	});
