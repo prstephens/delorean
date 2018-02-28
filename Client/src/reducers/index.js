@@ -12,26 +12,26 @@ const delorean = (state = initialState, action = {}) => {
         openSnackbar: true,
         snackbarMessage: action.snackbarMessage
       }
-      case 'CLOSE_SNACKBAR':
+    case 'CLOSE_SNACKBAR':
       return {
         ...state,
         openSnackbar: false,
         snackbarMessage: ''
       }
-      case 'CLOSE_DIALOG':
+    case 'CLOSE_DIALOG':
       return {
         ...state,
         dialogErrorMessage: null
       }
-      case 'GET_IS_TIMEMACHINE_ON_RECEIVED':
+    case 'GET_IS_TIMEMACHINE_ON_RECEIVED':
       return {
         ...state,
         isOn: action.data.ison
       }
-      case 'GET_IS_TIMEMACHINE_ON_ERROR':
-      case 'POST_TIMEMACHINE_ON_ERROR':
-      case 'POST_TIMEMACHINE_ON_SLEEP':
-      case 'POST_TIMEMACHINE_OFF_ERROR':
+    case 'GET_IS_TIMEMACHINE_ON_ERROR':
+    case 'POST_TIMEMACHINE_ON_ERROR':
+    case 'POST_TIMEMACHINE_ON_SLEEP':
+    case 'POST_TIMEMACHINE_OFF_ERROR':
       return {
         ...state,
         dialogErrorMessage: action.dialogErrorMessage
