@@ -1,10 +1,11 @@
 import axios from 'axios'
+import * as config from '../config/config.json'
 
 const dataService = store => next => action => {
     next(action)
 
     const getApi = getApiGenerator(next)
-    const baseUrl = 'http://paulstephens.no-ip.biz:8081/api/timemachine/'
+    const baseUrl = config.apiBaseURL
 
     switch (action.type) {
         case 'GET_IS_TIMEMACHINE_ON':
