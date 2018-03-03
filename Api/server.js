@@ -51,9 +51,9 @@ router.post('/timemachine/sleep', function(req, res, next) {
 	var connection_options = {
     		port: 22,
     		username: config.timemachineUsername,
-    		password: config.timemachinePassword,
+    		password: config.timemachinePasssword,
 		};
-		
+
 	var cmds = [
 		'powercfg -hibernate off',
     	'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
@@ -68,7 +68,7 @@ router.post('/timemachine/off', function(req, res, next) {
 	var connection_options = {
     		port: 22,
     		username: config.timemachineUsername,
-    		password: config.timemachinePassword,
+    		password: config.timemachinePasssword,
     	};
 
 	var cmds = [
