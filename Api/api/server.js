@@ -4,15 +4,14 @@
 // =============================================================================
 
 // call the packages we need
+var config = require('./config/config.json');
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var isReachable = require('is-port-reachable');
+var wol = require('wol');
 var rexec = require('remote-exec');
-var request = require('request');
-var config = require('./config/config.json');
-
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -27,24 +26,15 @@ var port = process.env.PORT || 8081;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 var hosts = [
-	'timemachine.lan'
+	config.timemachineHostname
 ];
 
 router.post('/timemachine/on', function(req, res, next) {
+	wol.wake(config.timemachineMAC, function(err, res){
+  		console.log(res);
+	});
 
-	var sys  = require('util'),
-        exec = require('child_process').exec,
-        child;
-
-    	child = exec('sh /home/pi/scripts/wol', function (error, stdout, stderr) 
-    	{
-        	if (error) // There was an error executing our script
-        	{
-            	return next(error);
-       	 	}
-
-        return res.json({ message: 'Wake on Lan requested' });
-    });
+     return res.json({ message: 'Wake on Lan requested' });
 });
 
 router.post('/timemachine/sleep', function(req, res, next) {
@@ -53,7 +43,7 @@ router.post('/timemachine/sleep', function(req, res, next) {
     		username: config.timemachineUsername,
     		password: config.timemachinePassword,
 		};
-		
+
 	var cmds = [
 		'powercfg -hibernate off',
     	'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
@@ -82,7 +72,7 @@ router.post('/timemachine/off', function(req, res, next) {
 
 
 router.get('/timemachine/ison', function(req, res, next) {
-	isReachable(3389, {host: 'timemachine.lan'})
+	isReachable(3389, { host: config.timemachineHostname })
 	.then(reachable => {
 		return res.json({ ison: reachable});
 	});
