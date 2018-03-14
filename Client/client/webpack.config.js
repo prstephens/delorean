@@ -1,12 +1,19 @@
 const webpack = require('webpack');
 const path = require('path'); // nodejs dependency when dealing with paths
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin'); // require webpack plugin
+
+const extractCSS = new ExtractTextWebpackPlugin({ filename: 'css/[name].[chunkhash].css' })
 
 let config = {
-    entry: './src/index.js',
+    entry: {
+        app: './src/index.js',
+        apptabs: './src/components/AppTabs/AppTabs.js'
+    },
     output: {
         path: path.resolve(__dirname, './dist'), // ouput path
-        filename: '[name].[chunkhash].js'
+        filename: 'js/[name].[chunkhash].js',
+        chunkFilename: 'js/[name].[chunkhash].js',
     },
     module: {
         rules: [
@@ -17,7 +24,12 @@ let config = {
             },
             {
                 test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
+                use: extractCSS.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        { loader: 'css-loader', options: { minimize: true } }
+                    ]
+                })
             }
         ]
     },
@@ -25,7 +37,9 @@ let config = {
         new HtmlWebpackPlugin({
             template: path.join('./public', 'index.html'),
             inject: 'body'
-        })
+        }),
+
+        extractCSS
     ]
 }
 
