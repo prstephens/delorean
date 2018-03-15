@@ -14,6 +14,7 @@ let config = {
         path: path.resolve(__dirname, './dist'), // ouput path
         filename: 'js/[name].[chunkhash].js',
         chunkFilename: 'js/[name].[chunkhash].js',
+        publicPath: ''
     },
     module: {
         rules: [
@@ -36,8 +37,10 @@ let config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join('./public', 'index.html'),
-            inject: 'body'
+            inject: 'body',
+            favicon: './public/favicon.ico'
         }),
+
 
         extractCSS
     ]
