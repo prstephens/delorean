@@ -2,8 +2,10 @@ const webpack = require('webpack');
 const path = require('path'); // nodejs dependency when dealing with paths
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin'); // require webpack plugin
+const fs = require('fs-extra');
 
 const extractCSS = new ExtractTextWebpackPlugin({ filename: 'css/[name].[chunkhash].css' })
+copyPublicFolder();
 
 let config = {
     entry: {
@@ -14,7 +16,7 @@ let config = {
         path: path.resolve(__dirname, './dist'), // ouput path
         filename: 'js/[name].[chunkhash].js',
         chunkFilename: 'js/[name].[chunkhash].js',
-        publicPath: ''
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -38,12 +40,18 @@ let config = {
         new HtmlWebpackPlugin({
             template: path.join('./public', 'index.html'),
             inject: 'body',
-            favicon: './public/favicon.ico'
+            favicon: './public/favicon.ico',
         }),
-
 
         extractCSS
     ]
 }
+
+function copyPublicFolder() {
+    fs.copySync('./public', './dist', {
+      dereference: true,
+      filter: file => file !== 'index.html',
+    });
+  }
 
 module.exports = config;
