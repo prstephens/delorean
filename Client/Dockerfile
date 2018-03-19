@@ -13,7 +13,7 @@ RUN npm run build
 
 # production environment
 FROM nginx
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
 
 
