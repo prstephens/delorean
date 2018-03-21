@@ -12,6 +12,8 @@ var cors = require('cors');
 var isReachable = require('is-port-reachable');
 var wol = require('wol');
 var rexec = require('remote-exec');
+var https = require('https');
+var fs = require('fs');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -19,7 +21,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8081;        // set our port
+var port = process.env.PORT || 8091;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -84,5 +86,11 @@ app.use('/api', router);
 
 // START THE SERVER
 // =============================================================================
+const options = {
+    cert: fs.readFileSync(config.certlocation),
+    key: fs.readFileSync(config.keylocation)
+};
+
 app.listen(port);
+https.createServer(options, app).listen(8081);
 console.log('Magic happens on port ' + port);
