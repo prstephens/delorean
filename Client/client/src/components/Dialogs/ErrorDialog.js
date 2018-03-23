@@ -29,7 +29,6 @@ const ErrorDialogContainer = ({ dialogErrorMessage, closeDialog }) => (
   }
   
   const mapStateToProps = (state) => ({
-    isOn: state.delorean.isOn,
     dialogErrorMessage: state.delorean.dialogErrorMessage
   })
   

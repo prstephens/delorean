@@ -1,3 +1,3 @@
 {
-    "apiBaseURL": "http://paulstephens.no-ip.biz:8081/api/timemachine/"
+    "apiBaseURL": "https://paulstephens.no-ip.biz:8081/api/timemachine/"
 }
