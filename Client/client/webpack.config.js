@@ -5,6 +5,7 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin') // requi
 const ManifestPlugin = require('webpack-manifest-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin")
 
 const extractCSS = new ExtractTextWebpackPlugin({ filename: 'css/[name].[chunkhash].css' })
 
@@ -66,6 +67,11 @@ let config = {
         }),
 
         extractCSS,
+
+        new CompressionPlugin({
+            test: /\.js/,
+            exclude: /\asset-manifest\.json$/
+        }),
 
         new CopyWebpackPlugin([
             { from: './public' }, // define the path of the files to be copied
