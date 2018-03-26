@@ -45,7 +45,7 @@ let config = {
         new HtmlWebpackPlugin({
             template: path.join('./public', 'index.html'),
             inject: 'body',
-            favicon: './public/favicon.png',
+            favicon: './public/favicon.ico',
         }),
         new SWPrecacheWebpackPlugin({
             // By default, a cache-busting query parameter is appended to requests
