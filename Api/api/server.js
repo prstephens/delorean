@@ -72,6 +72,21 @@ router.post('/timemachine/off', function(req, res, next) {
 	return res.json({ message: 'Shutdown requested' });
 });
 
+router.post('/timemachine/restart', function(req, res, next) {
+	var connection_options = {
+    		port: 22,
+    		username: config.timemachineUsername,
+    		password: config.timemachinePassword,
+    	};
+
+	var cmds = [
+		'shutdown /r /f /t 0'
+	];
+
+	rexec(hosts, cmds, connection_options);
+
+	return res.json({ message: 'Shutdown requested' });
+});
 
 router.get('/timemachine/ison', function(req, res, next) {
 	isReachable(3389, { host: config.timemachineHostname })

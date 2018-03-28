@@ -6,6 +6,7 @@ const delorean = (state = initialState, action = {}) => {
   switch (action.type) {
     case 'POST_TIMEMACHINE_ON_RECEIVED':
     case 'POST_TIMEMACHINE_OFF_RECEIVED':
+    case 'POST_TIMEMACHINE_RESTART_RECEIVED':
     case 'POST_TIMEMACHINE_SLEEP_RECEIVED':
       return {
         ...state,

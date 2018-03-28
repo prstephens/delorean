@@ -15,6 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodejs server.js"
+    "start-dev": "nodejs server.js",
+    "start": "NODE_ENV=production nodejs server.js"
   }
 }
