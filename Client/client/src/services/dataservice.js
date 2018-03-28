@@ -17,6 +17,9 @@ const dataService = store => next => action => {
         case 'POST_TIMEMACHINE_SLEEP':
             getApi(baseUrl + 'sleep', 'POST_TIMEMACHINE_SLEEP', 'post', 'Sleep Requested')
             break
+        case 'POST_TIMEMACHINE_RESTART':
+            getApi(baseUrl + 'restart', 'POST_TIMEMACHINE_RESTART', 'post', 'Restart Requested')
+            break
         case 'POST_TIMEMACHINE_OFF':
             getApi(baseUrl + 'off', 'POST_TIMEMACHINE_OFF', 'post', 'Shutdown Requested')
             break

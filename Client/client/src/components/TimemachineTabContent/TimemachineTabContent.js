@@ -19,6 +19,11 @@ const postSleepRequest = (event) => {
   store.dispatch({ type: 'POST_TIMEMACHINE_SLEEP' })
 }
 
+const postRestartRequest = (event) => {
+  event.preventDefault();
+  store.dispatch({ type: 'POST_TIMEMACHINE_RESTART' })
+}
+
 const postOffRequest = (event) => {
   event.preventDefault();
   store.dispatch({ type: 'POST_TIMEMACHINE_OFF' })
@@ -29,6 +34,8 @@ const TabContent = ({ isOn }) => (
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postSleepRequest} disabled={!isOn} label="Sleep" secondary={true} />
+    <br />
+    <RaisedButton style={style} fullWidth={true} onClick={postRestartRequest} disabled={!isOn} label="Restart" secondary={true} />
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postOffRequest} disabled={!isOn} label="Off" secondary={true} />
     <ErrorDialog />
