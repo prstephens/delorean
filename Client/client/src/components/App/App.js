@@ -1,17 +1,17 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
-import AppTabs from '../AppTabs/AppTabs'
 import Snackbar from 'material-ui/Snackbar'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { closeSnackbar } from '../../actions'
+import TimemachineContent from '../TimemachineContent/TimemachineContent'
 
 const App = ({ openSnackbar, snackbarMessage, closeSnackbar }) => (
   <MuiThemeProvider>
     <div>
       <AppBar showMenuIconButton={false} title="Delorean" />
-      <AppTabs />
+      <TimemachineContent />
       <Snackbar
         open={openSnackbar}
         message={snackbarMessage}

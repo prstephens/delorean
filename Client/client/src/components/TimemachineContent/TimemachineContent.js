@@ -29,7 +29,7 @@ const postOffRequest = (event) => {
   store.dispatch({ type: 'POST_TIMEMACHINE_OFF' })
 }
 
-const TabContent = ({ isOn }) => (
+const Content = ({ isOn }) => (
   <div>
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
     <br />
@@ -42,7 +42,7 @@ const TabContent = ({ isOn }) => (
   </div>
 )
 
-TabContent.propTypes = {
+Content.propTypes = {
   isOn: PropTypes.bool
 }
 
@@ -53,9 +53,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 };
 
-const TimemachineTabContent = connect(
+const TimemachineContent = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TabContent)
+)(Content)
 
-export default TimemachineTabContent
+export default TimemachineContent
