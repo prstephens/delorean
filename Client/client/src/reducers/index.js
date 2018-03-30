@@ -33,6 +33,7 @@ const delorean = (state = initialState, action = {}) => {
     case 'POST_TIMEMACHINE_ON_ERROR':
     case 'POST_TIMEMACHINE_ON_SLEEP':
     case 'POST_TIMEMACHINE_OFF_ERROR':
+    case 'NEW_VERSION':
       return {
         ...state,
         dialogErrorMessage: action.dialogErrorMessage
