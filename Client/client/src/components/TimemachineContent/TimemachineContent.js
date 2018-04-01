@@ -3,7 +3,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import store from '../../store'
-import ErrorDialog  from '../Dialogs/ErrorDialog'
 
 const style = {
   margin: '10px 0px 10px 0px'
@@ -29,7 +28,7 @@ const postOffRequest = (event) => {
   store.dispatch({ type: 'POST_TIMEMACHINE_OFF' })
 }
 
-const TabContent = ({ isOn }) => (
+const Content = ({ isOn }) => (
   <div>
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
     <br />
@@ -38,11 +37,10 @@ const TabContent = ({ isOn }) => (
     <RaisedButton style={style} fullWidth={true} onClick={postRestartRequest} disabled={!isOn} label="Restart" secondary={true} />
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postOffRequest} disabled={!isOn} label="Off" secondary={true} />
-    <ErrorDialog />
   </div>
 )
 
-TabContent.propTypes = {
+Content.propTypes = {
   isOn: PropTypes.bool
 }
 
@@ -53,9 +51,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 };
 
-const TimemachineTabContent = connect(
+const TimemachineContent = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TabContent)
+)(Content)
 
-export default TimemachineTabContent
+export default TimemachineContent
