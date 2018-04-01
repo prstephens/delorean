@@ -3,7 +3,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import store from '../../store'
-import ErrorDialog  from '../Dialogs/ErrorDialog'
 
 const style = {
   margin: '10px 0px 10px 0px'
@@ -38,7 +37,6 @@ const Content = ({ isOn }) => (
     <RaisedButton style={style} fullWidth={true} onClick={postRestartRequest} disabled={!isOn} label="Restart" secondary={true} />
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postOffRequest} disabled={!isOn} label="Off" secondary={true} />
-    <ErrorDialog />
   </div>
 )
 

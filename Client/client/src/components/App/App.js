@@ -6,11 +6,12 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { closeSnackbar } from '../../actions'
 import TimemachineContent from '../TimemachineContent/TimemachineContent'
+import ErrorDialog  from '../Dialogs/ErrorDialog'
 
 const App = ({ openSnackbar, snackbarMessage, closeSnackbar }) => (
   <MuiThemeProvider>
     <div>
-      <AppBar showMenuIconButton={false} title="Delorean" />
+      <AppBar title="Delorean" />
       <TimemachineContent />
       <Snackbar
         open={openSnackbar}
@@ -18,6 +19,7 @@ const App = ({ openSnackbar, snackbarMessage, closeSnackbar }) => (
         autoHideDuration={4000}
         onRequestClose={closeSnackbar}
       />
+      <ErrorDialog />
     </div>
   </MuiThemeProvider>
 )
