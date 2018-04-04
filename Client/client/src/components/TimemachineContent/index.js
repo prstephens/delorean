@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import store from '../../store'
 
 const style = {
-  margin: '10px 0px 10px 0px'
+  margin: '10px 10px 10px 10px'
 }
 
 const postWOLRequest = (event) => {
