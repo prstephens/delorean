@@ -85,7 +85,7 @@ router.post('/timemachine/restart', function(req, res, next) {
 
 	rexec(hosts, cmds, connection_options);
 
-	return res.json({ message: 'Shutdown requested' });
+	return res.json({ message: 'Restart requested' });
 });
 
 router.get('/timemachine/ison', function(req, res, next) {
