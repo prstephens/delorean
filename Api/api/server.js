@@ -17,7 +17,9 @@ var fs = require('fs');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(cors());
+app.use(cors({
+	origin: config.origin
+  }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
