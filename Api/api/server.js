@@ -17,11 +17,13 @@ var fs = require('fs');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(cors());
+app.use(cors({
+	origin: config.origin
+  }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8091;        // set our port
+var port = process.env.PORT || 8081;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -106,6 +108,5 @@ const options = {
     key: fs.readFileSync(config.keylocation)
 };
 
-app.listen(port);
-https.createServer(options, app).listen(8081);
+https.createServer(options, app).listen(port);
 console.log('Magic happens on port ' + port);

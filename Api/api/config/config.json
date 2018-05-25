@@ -4,5 +4,6 @@
     "timemachineMAC" : "1C:1B:0D:6F:74:F2",
     "timemachineHostname" : "timemachine.lan",
     "certlocation": "/etc/letsencrypt/live/paulstephens.no-ip.biz/fullchain.pem",
-    "keylocation": "/etc/letsencrypt/live/paulstephens.no-ip.biz/privkey.pem"
+    "keylocation": "/etc/letsencrypt/live/paulstephens.no-ip.biz/privkey.pem",
+    "origin": "https://paulstephens.no-ip.biz"
 }
