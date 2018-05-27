@@ -12,7 +12,6 @@ var cors = require('cors');
 var isReachable = require('is-port-reachable');
 var wol = require('wol');
 var rexec = require('remote-exec');
-var https = require('https');
 var fs = require('fs');
 
 // configure app to use bodyParser()
@@ -103,10 +102,5 @@ app.use('/api', router);
 
 // START THE SERVER
 // =============================================================================
-const options = {
-    cert: fs.readFileSync(config.certlocation),
-    key: fs.readFileSync(config.keylocation)
-};
-
-https.createServer(options, app).listen(port);
+app.listen(port);
 console.log('Magic happens on port ' + port);
