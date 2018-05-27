@@ -14,7 +14,6 @@ RUN npm install
 
 # Bundle app source
 COPY ./api /usr/src/nodeapi
-RUN mkdir -p  /etc/letsencrypt/
 
 EXPOSE 8081
 CMD [ "npm", "start" ]
