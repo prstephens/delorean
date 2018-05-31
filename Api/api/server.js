@@ -21,6 +21,7 @@ app.use(cors({
   }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.disable('x-powered-by');
 
 var port = process.env.PORT || 8081;        // set our port
 
