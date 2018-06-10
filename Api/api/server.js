@@ -20,7 +20,7 @@ var args = minimist(process.argv.slice(2), {
 		string: 'password'   
 });
 
-var timeMachinePassword = process.env.PASSWORD;
+var timeMachinePassword = args.password;
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
