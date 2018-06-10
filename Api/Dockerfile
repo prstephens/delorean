@@ -8,7 +8,7 @@ WORKDIR /usr/src/nodeapi
 # where available (npm@5+)
 COPY api/package.json ./
 
-RUN npm install
+RUN npm install --only=production
 # If you are building your code for production
 # RUN npm install --only=production
 
@@ -16,4 +16,5 @@ RUN npm install
 COPY ./api /usr/src/nodeapi
 
 EXPOSE 8081
-CMD [ "npm", "start" ]
+ENV NODE_ENV=production
+CMD ["nodejs", "server.js", "--password", "password"]

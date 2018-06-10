@@ -13,6 +13,14 @@ var isReachable = require('is-port-reachable');
 var wol = require('wol');
 var rexec = require('remote-exec');
 var fs = require('fs');
+var minimist = require('minimist');
+
+// passed in by command line arg -password
+var args = minimist(process.argv.slice(2), {
+		string: 'password'   
+});
+
+var timeMachinePassword = process.env.PASSWORD;
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -45,7 +53,7 @@ router.post('/timemachine/sleep', function(req, res, next) {
 	var connection_options = {
     		port: 22,
     		username: config.timemachineUsername,
-    		password: config.timemachinePassword,
+    		password: timeMachinePassword,
 		};
 
 	var cmds = [
@@ -62,7 +70,7 @@ router.post('/timemachine/off', function(req, res, next) {
 	var connection_options = {
     		port: 22,
     		username: config.timemachineUsername,
-    		password: config.timemachinePassword,
+    		password: timeMachinePassword,
     	};
 
 	var cmds = [
@@ -78,7 +86,7 @@ router.post('/timemachine/restart', function(req, res, next) {
 	var connection_options = {
     		port: 22,
     		username: config.timemachineUsername,
-    		password: config.timemachinePassword,
+    		password: timeMachinePassword,
     	};
 
 	var cmds = [
@@ -98,10 +106,10 @@ router.get('/timemachine/ison', function(req, res, next) {
 });
 
 // REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-app.use('/api', router);
+app.use('/', router);
 
 // START THE SERVER
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
