@@ -17,4 +17,5 @@ COPY ./api /usr/src/nodeapi
 
 EXPOSE 8081
 ENV NODE_ENV=production
-CMD ["nodejs", "server.js", "--password", "password"]
+ARG password
+CMD ["nodejs", "server.js", "--password", "${password}"]
