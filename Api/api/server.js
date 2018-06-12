@@ -1,29 +1,15 @@
-// server.js
-
-// BASE SETUP
-// =============================================================================
-
-// call the packages we need
 var config = require('./config/config.json');
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express    = require('express');        
+var app        = express();                 
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var isReachable = require('is-port-reachable');
 var wol = require('wol');
 var rexec = require('remote-exec');
-var fs = require('fs');
-var minimist = require('minimist');
 
-// passed in by command line arg -password
-var args = minimist(process.argv.slice(2), {
-		string: 'password'   
-});
+var port = process.env.PORT || 8081;        
+var timeMachinePassword = process.env.TM_PASS;
 
-var timeMachinePassword = args.password;
-
-// configure app to use bodyParser()
-// this will let us get the data from a POST
 app.use(cors({
 	origin: config.origin
   }));
@@ -31,11 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');
 
-var port = process.env.PORT || 8081;        // set our port
-
 // ROUTES FOR OUR API
 // =============================================================================
-var router = express.Router();              // get an instance of the express Router
+var router = express.Router();              
 
 var hosts = [
 	config.timemachineHostname
