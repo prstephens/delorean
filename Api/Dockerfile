@@ -16,6 +16,5 @@ RUN npm install --only=production
 COPY ./api /usr/src/nodeapi
 
 EXPOSE 8081
-ENV NODE_ENV=production
-ARG password
-CMD ["nodejs", "server.js", "--password", "${password}"]
+
+CMD ["nodejs", "server.js"]
