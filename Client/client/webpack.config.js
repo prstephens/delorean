@@ -13,6 +13,11 @@ let config = {
     entry: {
         app: './src/index.js'
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     output: {
         path: path.resolve(__dirname, './dist'), // ouput path
         filename: 'js/[name].[chunkhash].js',
