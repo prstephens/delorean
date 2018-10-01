@@ -31,8 +31,7 @@ const dataService = store => next => action => {
 const getApiGenerator = next => (url, name, method, message = 'Operation Requested') => {
     axios({
         method,
-        url,
-        headers: { 'Access-Control-Allow-Origin': '*' }
+        url
     })
         .then(resp => {
             const data = resp.data
@@ -46,7 +45,7 @@ const getApiGenerator = next => (url, name, method, message = 'Operation Request
             const apiError = error.toString()
             next({
                 type: `${name}_ERROR`,
-                dialogErrorMessage : apiError
+                dialogErrorMessage: apiError
             })
         })
 }
