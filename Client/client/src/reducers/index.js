@@ -8,6 +8,8 @@ const delorean = (state = initialState, action = {}) => {
     case 'POST_TIMEMACHINE_OFF_RECEIVED':
     case 'POST_TIMEMACHINE_RESTART_RECEIVED':
     case 'POST_TIMEMACHINE_SLEEP_RECEIVED':
+    case 'POST_TIMEMACHINE_SETDNS_RECEIVED':
+    case 'POST_TIMEMACHINE_RESETDNS_RECEIVED':
       return {
         ...state,
         openSnackbar: true,
@@ -33,6 +35,8 @@ const delorean = (state = initialState, action = {}) => {
     case 'POST_TIMEMACHINE_ON_ERROR':
     case 'POST_TIMEMACHINE_ON_SLEEP':
     case 'POST_TIMEMACHINE_OFF_ERROR':
+    case 'POST_TIMEMACHINE_SETDNS_ERROR':
+    case 'POST_TIMEMACHINE_RESETDNS_ERROR':
     case 'NEW_VERSION':
       return {
         ...state,
