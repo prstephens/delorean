@@ -28,6 +28,16 @@ const postOffRequest = (event) => {
   store.dispatch({ type: 'POST_TIMEMACHINE_OFF' })
 }
 
+const postSetDNSRequest = (event) => {
+  event.preventDefault();
+  store.dispatch({ type: 'POST_TIMEMACHINE_SETDNS' })
+}
+
+const postResetDNSRequest = (event) => {
+  event.preventDefault();
+  store.dispatch({ type: 'POST_TIMEMACHINE_RESETDNS' })
+}
+
 const Content = ({ isOn }) => (
   <div>
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
@@ -37,6 +47,10 @@ const Content = ({ isOn }) => (
     <RaisedButton style={style} fullWidth={true} onClick={postRestartRequest} disabled={!isOn} label="Restart" secondary={true} />
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postOffRequest} disabled={!isOn} label="Off" secondary={true} />
+    <br />
+    <RaisedButton style={style} fullWidth={true} onClick={postSetDNSRequest} disabled={!isOn} label="Set DNS" secondary={true} />
+    <br />
+    <RaisedButton style={style} fullWidth={true} onClick={postResetDNSRequest} disabled={!isOn} label="Reset DNS" secondary={true} />
   </div>
 )
 

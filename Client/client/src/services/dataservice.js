@@ -23,6 +23,12 @@ const dataService = store => next => action => {
         case 'POST_TIMEMACHINE_OFF':
             getApi(baseUrl + 'off', 'POST_TIMEMACHINE_OFF', 'post', 'Shutdown Requested')
             break
+        case 'POST_TIMEMACHINE_SETDNS':
+            getApi(baseUrl + 'setdns', 'POST_TIMEMACHINE_SETDNS', 'post', 'DNS Override Requested')
+            break
+        case 'POST_TIMEMACHINE_RESETDNS':
+            getApi(baseUrl + 'resetdns', 'POST_TIMEMACHINE_RESETDNS', 'post', 'DNS Reset Requested')
+            break
         default:
             break
     }
@@ -31,8 +37,7 @@ const dataService = store => next => action => {
 const getApiGenerator = next => (url, name, method, message = 'Operation Requested') => {
     axios({
         method,
-        url,
-        headers: { 'Access-Control-Allow-Origin': '*' }
+        url
     })
         .then(resp => {
             const data = resp.data
@@ -46,7 +51,7 @@ const getApiGenerator = next => (url, name, method, message = 'Operation Request
             const apiError = error.toString()
             next({
                 type: `${name}_ERROR`,
-                dialogErrorMessage : apiError
+                dialogErrorMessage: apiError
             })
         })
 }
