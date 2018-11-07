@@ -13,6 +13,7 @@ var timeMachinePassword = process.env.TM_PASS;
 app.use(cors({
 	origin: config.origin
 }));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.disable('x-powered-by');
@@ -25,6 +26,12 @@ var hosts = [
 	config.timemachineHostname
 ];
 
+var connection_options = {
+	port: 22,
+	username: config.timemachineUsername,
+	password: timeMachinePassword,
+};
+
 router.post('/timemachine/on', function (req, res, next) {
 	wol.wake(config.timemachineMAC, function (err, res) {
 		console.log(res);
@@ -34,12 +41,7 @@ router.post('/timemachine/on', function (req, res, next) {
 });
 
 router.post('/timemachine/sleep', function (req, res, next) {
-	var connection_options = {
-		port: 22,
-		username: config.timemachineUsername,
-		password: timeMachinePassword,
-	};
-
+	
 	var cmds = [
 		'powercfg -hibernate off',
 		'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
@@ -51,11 +53,6 @@ router.post('/timemachine/sleep', function (req, res, next) {
 });
 
 router.post('/timemachine/off', function (req, res, next) {
-	var connection_options = {
-		port: 22,
-		username: config.timemachineUsername,
-		password: timeMachinePassword,
-	};
 
 	var cmds = [
 		'shutdown /s /f /t 0'
@@ -67,11 +64,6 @@ router.post('/timemachine/off', function (req, res, next) {
 });
 
 router.post('/timemachine/restart', function (req, res, next) {
-	var connection_options = {
-		port: 22,
-		username: config.timemachineUsername,
-		password: timeMachinePassword,
-	};
 
 	var cmds = [
 		'shutdown /r /f /t 0'
@@ -90,26 +82,16 @@ router.get('/timemachine/ison', function (req, res, next) {
 });
 
 router.post('/timemachine/setdns', function (req, res, next) {
-	var connection_options = {
-		port: 22,
-		username: config.timemachineUsername,
-		password: timeMachinePassword,
-	};
 
 	var cmds = ['netsh interface ipv4 add dnsservers lan 208.67.222.123',
 		'netsh interface ipv4 add dnsservers lan 208.67.220.123'];
 
 	rexec(hosts, cmds, connection_options);
-	
+
 	return res.json({ message: 'DNS Override requested' });
 });
 
 router.post('/timemachine/resetdns', function (req, res, next) {
-	var connection_options = {
-		port: 22,
-		username: config.timemachineUsername,
-		password: timeMachinePassword,
-	};
 
 	var cmds = [
 		'netsh interface ip set dns lan dhcp'
