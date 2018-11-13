@@ -2,5 +2,7 @@
     "timemachineUsername" : "Paul",
     "timemachineMAC" : "1C:1B:0D:6F:74:F2",
     "timemachineHostname" : "timemachine.lan",
-    "origin": "https://paulstephens.ddns.net"
+    "origin": "https://paulstephens.ddns.net",
+    "adapterName" : "lan",
+    "dnsAddresses" : ["208.67.222.123","208.67.220.123"]
 }
