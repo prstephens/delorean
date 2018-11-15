@@ -7,8 +7,10 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "fs": "0.0.1-security",
     "is-port-reachable": "^2.0.0",
     "remote-exec": "0.0.3",
+    "simple-ssh": "^1.0.0",
     "wol": "^1.0.3"
   },
   "devDependencies": {},

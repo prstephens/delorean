@@ -4,13 +4,15 @@ const config = require('./config/config.json');
 let isReachable = require('is-port-reachable');
 let wol = require('wol');
 let rexec = require('remote-exec');
+let fs = require('fs');
+let SSH = require('simple-ssh');
 
 const isTimeMachineOn = () => {
     return isReachable(3389, { host: config.timemachineHostname }).then(reachable => { return reachable; });
 };
 
 const wakeTimemachine = () => {
-    wol.wake(config.timemachineMAC, function (err, res) {
+    wol.wake(config.timemachineMAC, (err, res) => {
         console.log(res);
     });
 };
@@ -40,6 +42,50 @@ const restartTimemachine = () => {
     callRemoteCommand(cmds);
 };
 
+const isDnsSet = (callback) => {
+    sendCommandReadOutput( (err, data) => {
+        if (err) {
+          console.error(err.stack);
+        } 
+        else {
+            if (data.length > 0){
+                return callback(true);
+            }
+            else
+            {
+                return callback(false);  
+            }
+        }
+      });
+};
+
+const sendCommandReadOutput = (callback) =>
+{
+    const ssh = new SSH({
+        host: config.timemachineHostname,
+        user: config.timemachineUsername,
+        pass: process.env.TM_PASS
+    });
+
+    const cmd = `ipconfig /all | findstr /R ${config.dnsAddresses[0]}`;
+    let data ='';
+    let error = null;
+
+    ssh.exec(cmd, {
+        out: stdout => {
+            data += stdout;
+        },
+        exit: code => {
+            if (code != 0) return callback(new Error('exit code: ' + code));
+      
+            return callback(error, data);
+        },
+        error: function(err) {
+            error = err;
+          }
+    }).start();
+}
+
 const toggleDns = (type) => {
     let cmds = [];
 
@@ -65,7 +111,7 @@ const callRemoteCommand = (cmds) => {
     const connection_options = {
         port: 22,
         username: config.timemachineUsername,
-        password: process.env.TM_PASS,
+        password: process.env.TM_PASS
     };
 
     rexec(hosts, cmds, connection_options);
@@ -77,3 +123,4 @@ module.exports.offTimemachine = offTimemachine;
 module.exports.restartTimemachine = restartTimemachine;
 module.exports.toggleDns = toggleDns;
 module.exports.wakeTimemachine = wakeTimemachine;
+module.exports.isDnsSet = isDnsSet;

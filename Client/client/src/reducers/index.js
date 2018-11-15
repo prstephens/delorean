@@ -31,7 +31,13 @@ const delorean = (state = initialState, action = {}) => {
         ...state,
         isOn: action.data.ison
       }
+    case 'GET_IS_DNSSET_RECEIVED':
+      return {
+        ...state,
+        isDnsSet: action.data.isdnsset
+      }
     case 'GET_IS_TIMEMACHINE_ON_ERROR':
+    case 'GET_IS_DNSSET_ERROR':
     case 'POST_TIMEMACHINE_ON_ERROR':
     case 'POST_TIMEMACHINE_ON_SLEEP':
     case 'POST_TIMEMACHINE_OFF_ERROR':

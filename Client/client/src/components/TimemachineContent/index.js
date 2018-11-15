@@ -38,7 +38,7 @@ const postResetDNSRequest = (event) => {
   store.dispatch({ type: 'POST_TIMEMACHINE_RESETDNS' })
 }
 
-const Content = ({ isOn }) => (
+const Content = ({ isOn, isDnsSet }) => (
   <div>
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
     <br />
@@ -48,18 +48,20 @@ const Content = ({ isOn }) => (
     <br />
     <RaisedButton style={style} fullWidth={true} onClick={postOffRequest} disabled={!isOn} label="Off" secondary={true} />
     <br />
-    <RaisedButton style={style} fullWidth={true} onClick={postSetDNSRequest} disabled={!isOn} label="Set DNS" secondary={true} />
+    <RaisedButton style={style} fullWidth={true} onClick={postSetDNSRequest} disabled={!(isOn && !isDnsSet)} label="Set DNS" secondary={true} />
     <br />
-    <RaisedButton style={style} fullWidth={true} onClick={postResetDNSRequest} disabled={!isOn} label="Reset DNS" secondary={true} />
+    <RaisedButton style={style} fullWidth={true} onClick={postResetDNSRequest} disabled={!(isOn && isDnsSet)} label="Reset DNS" secondary={true} />
   </div>
 )
 
 Content.propTypes = {
-  isOn: PropTypes.bool
+  isOn: PropTypes.bool,
+  isDnsSet: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
-  isOn: state.delorean.isOn
+  isOn: state.delorean.isOn,
+  isDnsSet: state.delorean.isDnsSet
 })
 
 const mapDispatchToProps = {

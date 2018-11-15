@@ -18,3 +18,4 @@ registerServiceWorker();
 console.log(React.version);
 
 store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })
+store.dispatch({ type: 'GET_IS_DNSSET' })
