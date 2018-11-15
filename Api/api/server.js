@@ -44,6 +44,12 @@ router.get('/timemachine/ison', function (req, res, next) {
 	service.isTimeMachineOn().then(isOn => { return res.json({ ison: isOn }); });
 });
 
+router.get('/timemachine/isdnsset', function (req, res, next) {
+	service.isDnsSet( isdnsset => {
+		return res.json({ isdnsset: isdnsset });
+	});
+});
+
 router.post('/timemachine/setdns', function (req, res, next) {
 	service.toggleDns('set');
 	return res.json({ message: 'DNS Override requested' });

@@ -23,6 +23,9 @@ const dataService = store => next => action => {
         case 'POST_TIMEMACHINE_OFF':
             getApi(baseUrl + 'off', 'POST_TIMEMACHINE_OFF', 'post', 'Shutdown Requested')
             break
+        case 'GET_IS_DNSSET':
+            getApi(baseUrl + 'isdnsset', 'GET_IS_DNSSET', 'get')
+            break
         case 'POST_TIMEMACHINE_SETDNS':
             getApi(baseUrl + 'setdns', 'POST_TIMEMACHINE_SETDNS', 'post', 'DNS Override Requested')
             break
