@@ -20,42 +20,42 @@ app.disable('x-powered-by');
 
 let router = express.Router();
 
-router.post('/timemachine/on', function (req, res, next) {
+router.post('/timemachine/on', (req, res, next) => {
 	service.wakeTimemachine();
 	return res.json({ message: 'Wake on Lan requested' });
 });
 
-router.post('/timemachine/sleep', function (req, res, next) {
+router.post('/timemachine/sleep', (req, res, next) => {
 	service.sleepTimemachine();
 	return res.json({ message: 'Sleep requested' });
 });
 
-router.post('/timemachine/off', function (req, res, next) {
+router.post('/timemachine/off', (req, res, next) => {
 	service.offTimemachine();
 	return res.json({ message: 'Shutdown requested' });
 });
 
-router.post('/timemachine/restart', function (req, res, next) {
+router.post('/timemachine/restart', (req, res, next) => {
 	service.restartTimemachine();
 	return res.json({ message: 'Restart requested' });
 });
 
-router.get('/timemachine/ison', function (req, res, next) {
+router.get('/timemachine/ison', (req, res, next) => {
 	service.isTimeMachineOn().then(isOn => { return res.json({ ison: isOn }); });
 });
 
-router.get('/timemachine/isdnsset', function (req, res, next) {
+router.get('/timemachine/isdnsset', (req, res, next) => {
 	service.isDnsSet( isdnsset => {
 		return res.json({ isdnsset: isdnsset });
 	});
 });
 
-router.post('/timemachine/setdns', function (req, res, next) {
+router.post('/timemachine/setdns', (req, res, next) => {
 	service.toggleDns('set');
 	return res.json({ message: 'DNS Override requested' });
 });
 
-router.post('/timemachine/resetdns', function (req, res, next) {
+router.post('/timemachine/resetdns', (req, res, next) => {
 	service.toggleDns('reset');
 	return res.json({ message: 'DNS Reset requested' });
 });

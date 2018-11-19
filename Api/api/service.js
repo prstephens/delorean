@@ -4,7 +4,6 @@ const config = require('./config/config.json');
 let isReachable = require('is-port-reachable');
 let wol = require('wol');
 let rexec = require('remote-exec');
-let fs = require('fs');
 let SSH = require('simple-ssh');
 
 const isTimeMachineOn = () => {
@@ -80,7 +79,7 @@ const sendCommandReadOutput = (callback) =>
       
             return callback(error, data);
         },
-        error: function(err) {
+        error: err => {
             error = err;
           }
     }).start();
