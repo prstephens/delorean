@@ -3,7 +3,6 @@ const config = require('./config/config.json');
 
 let isReachable = require('is-port-reachable');
 let wol = require('wol');
-let rexec = require('remote-exec');
 let SSH = require('simple-ssh');
 
 const isTimeMachineOn = () => {
@@ -22,7 +21,7 @@ const sleepTimemachine = () => {
         'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
     ];
 
-    callRemoteCommand(cmds);
+    sendCommandReadOutput(cmds, () => { });
 };
 
 const offTimemachine = () => {
@@ -30,7 +29,7 @@ const offTimemachine = () => {
         'shutdown /s /f /t 0'
     ];
 
-    callRemoteCommand(cmds);
+    sendCommandReadOutput(cmds, () => {});
 };
 
 const restartTimemachine = () => {
@@ -38,11 +37,13 @@ const restartTimemachine = () => {
         'shutdown /r /f /t 0'
     ];
 
-    callRemoteCommand(cmds);
+    sendCommandReadOutput(cmds, () => {});
 };
 
 const isDnsSet = (callback) => {
-    sendCommandReadOutput( (err, data) => {
+    const cmd = [`ipconfig /all | findstr /R ${config.dnsAddresses[0]}`];
+
+    sendCommandReadOutput( cmd, (err, data) => {
         if (err) {
           console.error(err.stack);
         } 
@@ -52,38 +53,11 @@ const isDnsSet = (callback) => {
             }
             else
             {
-                return callback(false);  
+                return callback(false);
             }
         }
       });
 };
-
-const sendCommandReadOutput = (callback) =>
-{
-    const ssh = new SSH({
-        host: config.timemachineHostname,
-        user: config.timemachineUsername,
-        pass: process.env.TM_PASS
-    });
-
-    const cmd = `ipconfig /all | findstr /R ${config.dnsAddresses[0]}`;
-    let data ='';
-    let error = null;
-
-    ssh.exec(cmd, {
-        out: stdout => {
-            data += stdout;
-        },
-        exit: code => {
-            if (code != 0) return callback(new Error('exit code: ' + code));
-      
-            return callback(error, data);
-        },
-        error: err => {
-            error = err;
-          }
-    }).start();
-}
 
 const toggleDns = (type) => {
     let cmds = [];
@@ -98,22 +72,40 @@ const toggleDns = (type) => {
             `netsh interface ip set dns ${config.adapterName} dhcp`
         ];
     }
-    callRemoteCommand(cmds);
+    sendCommandReadOutput(cmds, () => {});
 };
 
-const callRemoteCommand = (cmds) => {
+// private methods
+const sendCommandReadOutput = (cmds, callback) =>
+{
+    const ssh = new SSH({
+        host: config.timemachineHostname,
+        user: config.timemachineUsername,
+        pass: process.env.TM_PASS
+    });
 
-    const hosts = [
-        config.timemachineHostname
-    ];
+    let data ='';
+    let error = null;
 
-    const connection_options = {
-        port: 22,
-        username: config.timemachineUsername,
-        password: process.env.TM_PASS
-    };
+    cmds.forEach(cmd => {
+        ssh.exec(cmd, {
+            out: stdout => {
+                data += stdout;
+            },
+            exit: code => {
+                if (code != 0) return callback(new Error('exit code: ' + code));
+          
+                return callback(error, data);
+            }
+        });
+    });
 
-    rexec(hosts, cmds, connection_options);
+    ssh.start();
+
+    ssh.on('error', (err) => {
+        console.log('[!] SSH Error : ', err);
+        ssh.end();
+       });
 };
 
 module.exports.isTimeMachineOn = isTimeMachineOn;
