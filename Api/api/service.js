@@ -1,9 +1,15 @@
 'use strict'
 const config = require('./config/config.json');
+const sshHelper = require('./sshHelper.js');
 
-let isReachable = require('is-port-reachable');
-let wol = require('wol');
-let SSH = require('simple-ssh');
+const isReachable = require('is-port-reachable');
+const wol = require('wol');
+
+const sshOptions = {
+    host: config.timemachineHostname,
+    user: config.timemachineUsername,
+    pass: process.env.TM_PASS
+};
 
 const isTimeMachineOn = () => {
     return isReachable(3389, { host: config.timemachineHostname }).then(reachable => { return reachable; });
@@ -21,7 +27,7 @@ const sleepTimemachine = () => {
         'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
     ];
 
-    sendCommandReadOutput(cmds, () => { });
+    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => { });
 };
 
 const offTimemachine = () => {
@@ -29,7 +35,7 @@ const offTimemachine = () => {
         'shutdown /s /f /t 0'
     ];
 
-    sendCommandReadOutput(cmds, () => {});
+    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => {});
 };
 
 const restartTimemachine = () => {
@@ -37,13 +43,13 @@ const restartTimemachine = () => {
         'shutdown /r /f /t 0'
     ];
 
-    sendCommandReadOutput(cmds, () => {});
+    sshHelper.sendCommandReadOutput(cmds, () => {});
 };
 
 const isDnsSet = (callback) => {
     const cmd = [`ipconfig /all | findstr /R ${config.dnsAddresses[0]}`];
 
-    sendCommandReadOutput( cmd, (err, data) => {
+    sshHelper.sendCommandReadOutput( cmd, sshOptions, (err, data) => {
         if (err) {
           console.error(err.stack);
         } 
@@ -72,40 +78,8 @@ const toggleDns = (type) => {
             `netsh interface ip set dns ${config.adapterName} dhcp`
         ];
     }
-    sendCommandReadOutput(cmds, () => {});
-};
 
-// private methods
-const sendCommandReadOutput = (cmds, callback) =>
-{
-    const ssh = new SSH({
-        host: config.timemachineHostname,
-        user: config.timemachineUsername,
-        pass: process.env.TM_PASS
-    });
-
-    let data ='';
-    let error = null;
-
-    cmds.forEach(cmd => {
-        ssh.exec(cmd, {
-            out: stdout => {
-                data += stdout;
-            },
-            exit: code => {
-                if (code != 0) return callback(new Error('exit code: ' + code));
-          
-                return callback(error, data);
-            }
-        });
-    });
-
-    ssh.start();
-
-    ssh.on('error', (err) => {
-        console.log('[!] SSH Error : ', err);
-        ssh.end();
-       });
+    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => {});
 };
 
 module.exports.isTimeMachineOn = isTimeMachineOn;

@@ -31,11 +31,13 @@ const postOffRequest = (event) => {
 const postSetDNSRequest = (event) => {
   event.preventDefault();
   store.dispatch({ type: 'POST_TIMEMACHINE_SETDNS' })
+  store.dispatch({ type: 'GET_IS_DNSSET' })
 }
 
 const postResetDNSRequest = (event) => {
   event.preventDefault();
   store.dispatch({ type: 'POST_TIMEMACHINE_RESETDNS' })
+  store.dispatch({ type: 'GET_IS_DNSSET' })
 }
 
 const Content = ({ isOn, isDnsSet }) => (
