@@ -45,8 +45,16 @@ router.get('/timemachine/ison', (req, res, next) => {
 });
 
 router.get('/timemachine/isdnsset', (req, res, next) => {
-	service.isDnsSet( isdnsset => {
-		return res.json({ isdnsset: isdnsset });
+	let isDnsSet = false;
+	service.isDnsSet().then(data => {
+		if (data.length > 0) {
+			isDnsSet = true;
+		}
+
+		return res.json({ isdnsset: isDnsSet });
+
+	}).catch(err => {
+		console.error(err.stack);
 	});
 });
 

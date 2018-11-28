@@ -27,7 +27,7 @@ const sleepTimemachine = () => {
         'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
     ];
 
-    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => { });
+    sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
 const offTimemachine = () => {
@@ -35,7 +35,7 @@ const offTimemachine = () => {
         'shutdown /s /f /t 0'
     ];
 
-    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => {});
+    sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
 const restartTimemachine = () => {
@@ -43,26 +43,14 @@ const restartTimemachine = () => {
         'shutdown /r /f /t 0'
     ];
 
-    sshHelper.sendCommandReadOutput(cmds, () => {});
+    sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
-const isDnsSet = (callback) => {
+const isDnsSet = async () => {
     const cmd = [`ipconfig /all | findstr /R ${config.dnsAddresses[0]}`];
 
-    sshHelper.sendCommandReadOutput( cmd, sshOptions, (err, data) => {
-        if (err) {
-          console.error(err.stack);
-        } 
-        else {
-            if (data.length > 0){
-                return callback(true);
-            }
-            else
-            {
-                return callback(false);
-            }
-        }
-      });
+    const result = await sshHelper.sendCommandReadOutput(cmd, sshOptions);
+    return result;
 };
 
 const toggleDns = (type) => {
@@ -79,7 +67,7 @@ const toggleDns = (type) => {
         ];
     }
 
-    sshHelper.sendCommandReadOutput(cmds, sshOptions, () => {});
+    sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
 module.exports.isTimeMachineOn = isTimeMachineOn;
