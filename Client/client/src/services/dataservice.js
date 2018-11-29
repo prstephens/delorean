@@ -54,7 +54,8 @@ const getApiGenerator = next => (url, name, method, message = 'Operation Request
             const apiError = error.toString()
             next({
                 type: `${name}_ERROR`,
-                dialogErrorMessage: apiError
+                dialogTitle: 'Oopsy, something went bang!',
+                dialogMessage: apiError
             })
         })
 }

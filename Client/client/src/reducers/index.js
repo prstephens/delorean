@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-const initialState = { openSnackbar: false, snackbarMessage: '', isOn: false, dialogErrorMessage: null }
+const initialState = { openSnackbar: false, snackbarMessage: '', isOn: false, dialogTitle: 'Title', dialogMessage: null }
 
 const delorean = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -24,7 +24,7 @@ const delorean = (state = initialState, action = {}) => {
     case 'CLOSE_DIALOG':
       return {
         ...state,
-        dialogErrorMessage: null
+        dialogMessage: null
       }
     case 'GET_IS_TIMEMACHINE_ON_RECEIVED':
       return {
@@ -43,10 +43,12 @@ const delorean = (state = initialState, action = {}) => {
     case 'POST_TIMEMACHINE_OFF_ERROR':
     case 'POST_TIMEMACHINE_SETDNS_ERROR':
     case 'POST_TIMEMACHINE_RESETDNS_ERROR':
+    case 'GET_IS_DNSSET_ERROR':
     case 'NEW_VERSION':
       return {
         ...state,
-        dialogErrorMessage: action.dialogErrorMessage
+        dialogTitle: action.dialogTitle,
+        dialogMessage: action.dialogMessage
       }
     default:
       return state

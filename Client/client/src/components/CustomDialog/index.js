@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { closeDialog } from '../../actions'
 
-const ErrorDialogContainer = ({ dialogErrorMessage, closeDialog }) => (
+const CustomDialogContainer = ({dialogTitle, dialogMessage, closeDialog }) => (
       <Dialog
-        title="Oopsy, something went bang!"
+        title={dialogTitle}
         actions={[
           <FlatButton
             label="OK"
@@ -16,29 +16,31 @@ const ErrorDialogContainer = ({ dialogErrorMessage, closeDialog }) => (
           />
         ]}
         modal={true}
-        open={dialogErrorMessage != null}
+        open={dialogMessage != null}
         onRequestClose={closeDialog}
       >
-        {dialogErrorMessage}
+        {dialogMessage}
       </Dialog>
   )
   
-  ErrorDialogContainer.propTypes = {
-    dialogErrorMessage: PropTypes.string,
+  CustomDialogContainer.propTypes = {
+    dialogTitle: PropTypes.string,
+    dialogMessage: PropTypes.string,
     closeDialog: PropTypes.func
   }
   
   const mapStateToProps = (state) => ({
-    dialogErrorMessage: state.delorean.dialogErrorMessage
+    dialogTitle: state.delorean.dialogTitle,
+    dialogMessage: state.delorean.dialogMessage
   })
   
   const mapDispatchToProps = {
     closeDialog
   };
   
-  const ErrorDialog = connect(
+  const CustomDialog = connect(
     mapStateToProps,
     mapDispatchToProps
-  )(ErrorDialogContainer)
+  )(CustomDialogContainer)
   
-  export default ErrorDialog
+  export default CustomDialog
