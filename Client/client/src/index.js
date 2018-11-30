@@ -9,10 +9,9 @@ ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,
-    document.getElementById('root'));
+    document.getElementById('root'))
 
-registerServiceWorker();
-console.log(React.version);
+registerServiceWorker()
 
-store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })
 store.dispatch({ type: 'GET_IS_DNSSET' })
+store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })

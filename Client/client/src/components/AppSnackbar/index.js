@@ -28,9 +28,4 @@ const mapDispatchToProps = {
   closeSnackbar
 };
 
-const SnackbarContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppSnackbar)
-
-export default SnackbarContainer
+export default  connect(mapStateToProps, mapDispatchToProps)(AppSnackbar)

@@ -3,7 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import AppSnackbar from '../AppSnackbar'
 import TimemachineContent from '../TimemachineContent'
-import ErrorDialog  from '../ErrorDialog'
+import CustomDialog  from '../CustomDialog'
 
 const App = () => (
   <MuiThemeProvider>
@@ -11,7 +11,7 @@ const App = () => (
       <AppBar title="Delorean" />
       <TimemachineContent />
       <AppSnackbar/>
-      <ErrorDialog />
+      <CustomDialog />
     </div>
   </MuiThemeProvider>
 )

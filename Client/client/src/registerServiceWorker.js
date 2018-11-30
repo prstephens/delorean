@@ -27,7 +27,8 @@ export default function register() {
                   // available; please refresh." message in your web app.
                   store.dispatch({
                     type: 'NEW_VERSION',
-                    dialogErrorMessage: 'A new version is available. Please refresh to get the latest.'
+                    dialogTitle: 'Awesome News!',
+                    dialogMessage: 'A new version is available. Please refresh to get the latest.'
                   });
                   console.log('New content is available; please refresh.');
                 } else {
