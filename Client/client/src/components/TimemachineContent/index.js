@@ -40,7 +40,7 @@ const postResetDNSRequest = (event) => {
   store.dispatch({ type: 'GET_IS_DNSSET' })
 }
 
-const Content = ({ isOn, isDnsSet }) => (
+const TimemachineContent = ({ isOn, isDnsSet }) => (
   <div>
     <RaisedButton style={style} fullWidth={true} onClick={postWOLRequest} disabled={isOn} label="Wake up" secondary={true} />
     <br />
@@ -56,7 +56,7 @@ const Content = ({ isOn, isDnsSet }) => (
   </div>
 )
 
-Content.propTypes = {
+TimemachineContent.propTypes = {
   isOn: PropTypes.bool,
   isDnsSet: PropTypes.bool
 }
@@ -66,12 +66,4 @@ const mapStateToProps = (state) => ({
   isDnsSet: state.delorean.isDnsSet
 })
 
-const mapDispatchToProps = {
-};
-
-const TimemachineContent = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Content)
-
-export default TimemachineContent
+export default connect(mapStateToProps)(TimemachineContent)

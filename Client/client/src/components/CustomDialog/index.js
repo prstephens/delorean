@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { closeDialog } from '../../actions'
 
-const CustomDialogContainer = ({dialogTitle, dialogMessage, closeDialog }) => (
+const CustomDialog = ({dialogTitle, dialogMessage, closeDialog }) => (
       <Dialog
         title={dialogTitle}
         actions={[
@@ -23,7 +23,7 @@ const CustomDialogContainer = ({dialogTitle, dialogMessage, closeDialog }) => (
       </Dialog>
   )
   
-  CustomDialogContainer.propTypes = {
+  CustomDialog.propTypes = {
     dialogTitle: PropTypes.string,
     dialogMessage: PropTypes.string,
     closeDialog: PropTypes.func
@@ -38,9 +38,4 @@ const CustomDialogContainer = ({dialogTitle, dialogMessage, closeDialog }) => (
     closeDialog
   };
   
-  const CustomDialog = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CustomDialogContainer)
-  
-  export default CustomDialog
+  export default connect(mapStateToProps, mapDispatchToProps)(CustomDialog)
