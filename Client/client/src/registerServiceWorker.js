@@ -28,7 +28,7 @@ export default function register() {
                   store.dispatch({
                     type: 'NEW_VERSION',
                     dialogTitle: 'Awesome News!',
-                    dialogErrorMessage: 'A new version is available. Please refresh to get the latest.'
+                    dialogMessage: 'A new version is available. Please refresh to get the latest.'
                   });
                   console.log('New content is available; please refresh.');
                 } else {

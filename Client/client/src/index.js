@@ -5,13 +5,13 @@ import { Provider } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker'
 import store from './store'
 
-registerServiceWorker()
-
 ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,
     document.getElementById('root'))
+
+registerServiceWorker()
 
 store.dispatch({ type: 'GET_IS_DNSSET' })
 store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })
