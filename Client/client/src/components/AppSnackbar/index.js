@@ -8,10 +8,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import { closeSnackbar } from '../../actions'
-
-
 
 const styles = theme => ({
   success: {
