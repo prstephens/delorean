@@ -1,15 +1,27 @@
 import React from 'react'
-import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import store from '../../store'
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Avatar from '@material-ui/core/Avatar';
+import pink from '@material-ui/core/colors/pink';
+
+import DNSIcon from '@material-ui/icons/CloudQueue';
+
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  button: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit * 2
-  }
+  card: {
+    margin: 10,
+  },
+  avatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: pink[500],
+  },
 });
 
 const postSetDNSRequest = (event) => {
@@ -26,13 +38,34 @@ const postResetDNSRequest = (event) => {
 
 const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
   <div>
-    <Button className={classes.button} variant="contained" color="secondary" disabled={!(isOn && !isDnsSet)} fullWidth={true} onClick={postSetDNSRequest}>
-      Set DNS
-        </Button>
-    <br />
-    <Button className={classes.button} variant="contained" color="secondary" disabled={!(isOn && isDnsSet)} fullWidth={true} onClick={postResetDNSRequest}>
-      Reset DNS
-        </Button>
+    {isOn && !isDnsSet && (<Card className={classes.card}>
+      <CardActionArea onClick={postSetDNSRequest}>
+        <CardHeader
+          avatar={
+            <Avatar className={classes.avatar}>
+              <DNSIcon />
+            </Avatar>
+          }
+          title="Set DNS"
+          subheader="Sets OpenDNS IP addresses to the adapter"
+        />
+      </CardActionArea>
+    </Card>
+    )}
+    {isOn && isDnsSet && (<Card className={classes.card}>
+      <CardActionArea onClick={postResetDNSRequest}>
+        <CardHeader
+          avatar={
+            <Avatar className={classes.avatar}>
+              <DNSIcon />
+            </Avatar>
+          }
+          title="Reset DNS"
+          subheader="Reset the DNS servers to ISP defaults"
+        />
+      </CardActionArea>
+    </Card>
+    )}
   </div>
 )
 

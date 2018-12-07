@@ -1,15 +1,29 @@
 import React from 'react'
-import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import store from '../../store'
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Avatar from '@material-ui/core/Avatar';
+import pink from '@material-ui/core/colors/pink';
+
+import RestartIcon from '@material-ui/icons/AutoRenew';
+import PowerIcon from '@material-ui/icons/PowerSettingsNew';
+import SleepIcon from '@material-ui/icons/AirlineSeatIndividualSuite';
+
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  button: {
-    textAlign: 'center',
-    marginTop: theme.spacing.unit * 2
-  }
+  card: {
+    margin: 10,
+  },
+  avatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: pink[500],
+  },
 });
 
 const postWOLRequest = (event) => {
@@ -34,21 +48,61 @@ const postOffRequest = (event) => {
 
 const PowerTabContent = ({ isOn, classes }) => (
   <div>
-    <Button className={classes.button} variant="contained" color="secondary" disabled={isOn} fullWidth={true} onClick={postWOLRequest}>
-      Wake up
-        </Button>
-    <br />
-    <Button className={classes.button} variant="contained" color="secondary" disabled={!isOn} fullWidth={true} onClick={postSleepRequest}>
-      Sleep
-        </Button>
-    <br />
-    <Button className={classes.button} variant="contained" color="secondary" disabled={!isOn} fullWidth={true} onClick={postRestartRequest}>
-      Restart
-        </Button>
-    <br />
-    <Button className={classes.button} variant="contained" color="secondary" disabled={!isOn} fullWidth={true} onClick={postOffRequest}>
-      Off
-        </Button>
+    {!isOn && (<Card className={classes.card}>
+      <CardActionArea onClick={postWOLRequest}>
+        <CardHeader
+          avatar={
+            <Avatar className={classes.avatar}>
+              <PowerIcon />
+            </Avatar>
+          }
+          title="Wake up"
+          subheader="Turn on the Timemachine"
+        />
+      </CardActionArea>
+    </Card>
+    )}
+    {isOn && (
+      <Card className={classes.card}>
+        <CardActionArea onClick={postRestartRequest}>
+          <CardHeader
+            avatar={
+              <Avatar className={classes.avatar}>
+                <RestartIcon />
+              </Avatar>
+            }
+            title="Restart"
+            subheader="Restart the Timemachine"
+          /></CardActionArea>
+      </Card>
+    )}
+    {isOn && (
+      <Card className={classes.card}>
+        <CardActionArea onClick={postSleepRequest}>
+          <CardHeader
+            avatar={
+              <Avatar className={classes.avatar}>
+                <SleepIcon />
+              </Avatar>
+            }
+            title="Sleep"
+            subheader="Put the Timemachine to sleep"
+          /></CardActionArea>
+      </Card>
+    )}
+    {isOn && (
+      <Card className={classes.card}>
+        <CardActionArea onClick={postOffRequest}>
+          <CardHeader
+            avatar={
+              <Avatar className={classes.avatar}>
+                <PowerIcon />
+              </Avatar>
+            }
+            title="Power off"
+            subheader="Shutdown the Timemachine"
+          /></CardActionArea>
+      </Card>)}
   </div>
 )
 
