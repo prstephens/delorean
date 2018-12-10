@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import pink from '@material-ui/core/colors/pink';
 
 import DNSIcon from '@material-ui/icons/CloudQueue';
+import ComputerIcon from '@material-ui/icons/DesktopAccessDisabled';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -21,7 +22,18 @@ const styles = theme => ({
     margin: 10,
     color: '#fff',
     backgroundColor: pink[500],
+    height: 70,
+    width: 70,
   },
+  icon: {
+    height: 50,
+    width: 50,
+  },
+  computericon: {
+    height: 70,
+    width: 70,
+  },
+
 });
 
 const postSetDNSRequest = (event) => {
@@ -38,12 +50,22 @@ const postResetDNSRequest = (event) => {
 
 const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
   <div>
+    {!isOn && (<Card className={classes.card}>
+      <CardHeader
+        avatar={
+          <ComputerIcon className={classes.computericon} />
+        }
+        title="Timemachine is off!"
+        subheader="The Computer seems to be off. Please wake it up using the option in the Power tab"
+      />
+    </Card>
+    )}
     {isOn && !isDnsSet && (<Card className={classes.card}>
       <CardActionArea onClick={postSetDNSRequest}>
         <CardHeader
           avatar={
             <Avatar className={classes.avatar}>
-              <DNSIcon />
+              <DNSIcon className={classes.icon} />
             </Avatar>
           }
           title="Set DNS"
@@ -57,7 +79,7 @@ const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
         <CardHeader
           avatar={
             <Avatar className={classes.avatar}>
-              <DNSIcon />
+              <DNSIcon className={classes.icon} />
             </Avatar>
           }
           title="Reset DNS"

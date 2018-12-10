@@ -23,7 +23,13 @@ const styles = theme => ({
     margin: 10,
     color: '#fff',
     backgroundColor: pink[500],
+    height: 70,
+    width: 70,
   },
+  icon: {
+    height: 50,
+    width: 50,
+  }
 });
 
 const postWOLRequest = (event) => {
@@ -53,7 +59,7 @@ const PowerTabContent = ({ isOn, classes }) => (
         <CardHeader
           avatar={
             <Avatar className={classes.avatar}>
-              <PowerIcon />
+              <PowerIcon className={classes.icon}/>
             </Avatar>
           }
           title="Wake up"
@@ -68,7 +74,7 @@ const PowerTabContent = ({ isOn, classes }) => (
           <CardHeader
             avatar={
               <Avatar className={classes.avatar}>
-                <RestartIcon />
+                <RestartIcon className={classes.icon}/>
               </Avatar>
             }
             title="Restart"
@@ -82,7 +88,7 @@ const PowerTabContent = ({ isOn, classes }) => (
           <CardHeader
             avatar={
               <Avatar className={classes.avatar}>
-                <SleepIcon />
+                <SleepIcon className={classes.icon}/>
               </Avatar>
             }
             title="Sleep"
@@ -96,7 +102,7 @@ const PowerTabContent = ({ isOn, classes }) => (
           <CardHeader
             avatar={
               <Avatar className={classes.avatar}>
-                <PowerIcon />
+                <PowerIcon className={classes.icon}/>
               </Avatar>
             }
             title="Power off"
