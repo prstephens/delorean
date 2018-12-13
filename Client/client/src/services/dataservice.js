@@ -47,7 +47,8 @@ const getApiGenerator = next => (url, name, method, message = 'Operation Request
             next({
                 type: `${name}_RECEIVED`,
                 data,
-                snackbarMessage: message
+                snackbarMessage: message,
+                loading: false
             })
         })
         .catch(error => {
@@ -55,7 +56,8 @@ const getApiGenerator = next => (url, name, method, message = 'Operation Request
             next({
                 type: `${name}_ERROR`,
                 dialogTitle: 'Oopsy, something went bang!',
-                dialogMessage: apiError
+                dialogMessage: apiError,
+                loading: false
             })
         })
 }

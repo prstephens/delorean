@@ -12,6 +12,3 @@ ReactDOM.render(
     document.getElementById('root'))
 
 registerServiceWorker()
-
-store.dispatch({ type: 'GET_IS_DNSSET' })
-store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })
