@@ -40,8 +40,13 @@ class App extends React.Component {
 
     if (loading) {
       return (
-        <div className={classes.progressWrapper}>
-          <CircularProgress className={classes.progress} size={80} color="secondary" />
+        <div>
+          <div className={classes.progressWrapper}>
+            <CircularProgress className={classes.progress} size={80} color="secondary" />
+          </div>
+          <Typography align="center" variant="body2" color="inherit" className={classes.grow}>
+            Starting time circuits...
+            </Typography>
         </div>
       )
     }
