@@ -8,6 +8,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import pink from '@material-ui/core/colors/pink';
+import green from '@material-ui/core/colors/green';
+import orange from '@material-ui/core/colors/orange';
 
 import DNSIcon from '@material-ui/icons/CloudQueue';
 import ComputerIcon from '@material-ui/icons/DesktopAccessDisabled';
@@ -25,6 +27,20 @@ const styles = theme => ({
     height: 70,
     width: 70,
   },
+  dnsSetAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: green[500],
+    height: 70,
+    width: 70,
+  },
+  dnsResetAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: orange[500],
+    height: 70,
+    width: 70,
+  },
   icon: {
     height: 50,
     width: 50,
@@ -36,19 +52,26 @@ const styles = theme => ({
 
 });
 
-const postSetDNSRequest = (event) => {
+const postSetCloudflareDNSRequest = (event) => {
   event.preventDefault();
-  store.dispatch({ type: 'POST_TIMEMACHINE_SETDNS' })
-  store.dispatch({ type: 'GET_IS_DNSSET' })
+  store.dispatch({ type: 'POST_TIMEMACHINE_SETDNS', provider: 'Cloudflare' })
+  store.dispatch({ type: 'GET_WHICH_DNS' })
+
+}
+
+const postSetOpenDNSRequest = (event) => {
+  event.preventDefault();
+  store.dispatch({ type: 'POST_TIMEMACHINE_SETDNS', provider: 'OpenDNS' })
+  store.dispatch({ type: 'GET_WHICH_DNS' })
+
 }
 
 const postResetDNSRequest = (event) => {
   event.preventDefault();
   store.dispatch({ type: 'POST_TIMEMACHINE_RESETDNS' })
-  store.dispatch({ type: 'GET_IS_DNSSET' })
 }
 
-const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
+const DnsTabContent = ({ isOn, dnsProvider, classes }) => (
   <div>
     {!isOn && (<Card className={classes.card}>
       <CardHeader
@@ -60,25 +83,51 @@ const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
       />
     </Card>
     )}
-    {isOn && !isDnsSet && (<Card className={classes.card}>
-      <CardActionArea onClick={postSetDNSRequest}>
+    {isOn && (<Card className={classes.card}>
+      <CardHeader
+        avatar={
+          <Avatar className={classes.dnsSetAvatar}>
+            <DNSIcon className={classes.icon} />
+          </Avatar>
+        }
+        title="DNS has been set"
+        subheader={dnsProvider}
+      />
+    </Card>
+    )}
+    {isOn && (<Card className={classes.card}>
+      <CardActionArea onClick={postSetOpenDNSRequest}>
         <CardHeader
           avatar={
             <Avatar className={classes.avatar}>
               <DNSIcon className={classes.icon} />
             </Avatar>
           }
-          title="Set DNS"
+          title="OpenDNS"
           subheader="Sets OpenDNS IP addresses to the adapter"
         />
       </CardActionArea>
     </Card>
     )}
-    {isOn && isDnsSet && (<Card className={classes.card}>
-      <CardActionArea onClick={postResetDNSRequest}>
+    {isOn && (<Card className={classes.card}>
+      <CardActionArea onClick={postSetCloudflareDNSRequest}>
         <CardHeader
           avatar={
             <Avatar className={classes.avatar}>
+              <DNSIcon className={classes.icon} />
+            </Avatar>
+          }
+          title="Cloudflare"
+          subheader="Sets Cloudflare IP addresses to the adapter"
+        />
+      </CardActionArea>
+    </Card>
+    )}
+    {isOn && (<Card className={classes.card}>
+      <CardActionArea onClick={postResetDNSRequest}>
+        <CardHeader
+          avatar={
+            <Avatar className={classes.dnsResetAvatar}>
               <DNSIcon className={classes.icon} />
             </Avatar>
           }
@@ -93,13 +142,13 @@ const DnsTabContent = ({ isOn, isDnsSet, classes }) => (
 
 DnsTabContent.propTypes = {
   isOn: PropTypes.bool,
-  isDnsSet: PropTypes.bool,
+  dnsProvider: PropTypes.string,
   classes: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
   isOn: state.delorean.isOn,
-  isDnsSet: state.delorean.isDnsSet
+  dnsProvider: state.delorean.dnsProvider
 })
 
 export default withStyles(styles)(connect(mapStateToProps)(DnsTabContent))

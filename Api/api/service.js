@@ -47,33 +47,87 @@ const restartTimemachine = () => {
 };
 
 const isDnsSet = async () => {
-    const cmd = [`ipconfig /all | findstr /R ${config.dnsAddresses[0]}`];
+    const dnsProviders = config.dnsProvider;
+    let cmds = [];
+    let serverStr = '';
 
-    const result = await sshHelper.sendCommandReadOutput(cmd, sshOptions);
-    return result;
+    dnsProviders.forEach(provider => {
+        serverStr += provider.servers[0] + ' ';
+    });
+
+    cmds.push('ipconfig /all | findstr /R \"' + serverStr + '\"');
+
+    console.log(cmds);
+    return await sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
-const toggleDns = (type) => {
+const getDnsProvider = () => {
+    let dnsProvider = '';
+    let ip = '';
+
+    return new Promise( (resolve, reject) => {
+        callDnsFinder().then(data => {
+            if (data.length > 0) {
+
+                ip = data.substr(data.indexOf(':') + 1, data.length).trim();
+                dnsProvider = getDnsProviderByIp(config.dnsProvider, ip);
+
+                resolve(dnsProvider);
+            }
+        }).catch(err => {
+            console.error(err.stack);
+        });
+    });
+};
+
+const setDns = (provider) => {
     let cmds = [];
 
-    if (type == 'set') {
-        config.dnsAddresses.forEach(dnsAddress => {
-            cmds.push(`netsh interface ipv4 add dnsservers ${config.adapterName} ${dnsAddress}`);
-        });
-    }
-    else {
-        cmds = [
-            `netsh interface ip set dns ${config.adapterName} dhcp`
-        ];
-    }
+    const dnsProvider = getDnsServersByProvider(config.dnsProvider, provider);
+
+    resetDns();
+
+    dnsProvider[0].servers.forEach(dnsAddress => {
+        cmds.push(`netsh interface ipv4 add dnsservers ${config.adapterName} ${dnsAddress}`);
+    });
 
     sshHelper.sendCommandReadOutput(cmds, sshOptions);
+};
+
+const resetDns = () => {
+    let cmds = [`netsh interface ip set dns ${config.adapterName} dhcp`];
+    sshHelper.sendCommandReadOutput(cmds, sshOptions);
+};
+
+// Private functions
+
+const callDnsFinder = async () => {
+    const cmd = ['ipconfig /all | findstr /R Servers'];
+    return await sshHelper.sendCommandReadOutput(cmd, sshOptions);
+};
+
+const getDnsServersByProvider = (providerList, provider) => {
+    return providerList.filter(
+        function (providerList) {
+            return providerList.name == provider
+        }
+    );
+};
+
+const getDnsProviderByIp = (providerList, ip) => {
+    return providerList.filter(
+        function (providerList) {
+            return providerList.servers[0] == ip
+        }
+    )[0].name;
 };
 
 module.exports.isTimeMachineOn = isTimeMachineOn;
 module.exports.sleepTimemachine = sleepTimemachine;
 module.exports.offTimemachine = offTimemachine;
 module.exports.restartTimemachine = restartTimemachine;
-module.exports.toggleDns = toggleDns;
 module.exports.wakeTimemachine = wakeTimemachine;
 module.exports.isDnsSet = isDnsSet;
+module.exports.setDns = setDns;
+module.exports.resetDns = resetDns;
+module.exports.getDnsProvider = getDnsProvider;

@@ -8,9 +8,11 @@ const sendCommandReadOutput = (cmds, options) =>
 
     return new Promise( (resolve, reject) => {
         cmds.forEach(cmd => {
+            console.log('[SSH Helper] - calling: ' + cmd);
             ssh.exec(cmd, {
                 out: stdout => {
-                    data += stdout;
+                    console.log('[SSH Helper] - stdout: ' + stdout);
+                    data += Strings.orEmpty( stdout );
                 },
                 exit: code => {
                     if (code != 0) {
@@ -20,7 +22,7 @@ const sendCommandReadOutput = (cmds, options) =>
               
                     resolve(data);
                 },
-                error: err => {
+                err: err => {
                     ssh.end();
                     console.log('[!] SSH Error : ', err);
                     reject(err);
@@ -28,6 +30,11 @@ const sendCommandReadOutput = (cmds, options) =>
             }).start();
         });
     });
+};
+
+const Strings = {};
+Strings.orEmpty = entity => {
+    return entity || "";
 };
 
 module.exports.sendCommandReadOutput = sendCommandReadOutput;

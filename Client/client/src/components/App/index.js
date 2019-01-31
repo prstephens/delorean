@@ -24,7 +24,7 @@ const styles = theme => ({
 class App extends React.Component {
 
   componentDidMount() {
-    store.dispatch({ type: 'GET_IS_DNSSET' })
+    store.dispatch({ type: 'GET_WHICH_DNS' })
     store.dispatch({ type: 'GET_IS_TIMEMACHINE_ON' })
   }
 
