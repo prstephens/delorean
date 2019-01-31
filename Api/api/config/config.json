@@ -1,8 +1,23 @@
 {
-    "timemachineUsername" : "Paul",
-    "timemachineMAC" : "1C:1B:0D:6F:74:F2",
-    "timemachineHostname" : "timemachine.lan",
+    "timemachineUsername": "Paul",
+    "timemachineMAC": "1C:1B:0D:6F:74:F2",
+    "timemachineHostname": "timemachine.lan",
     "origin": "https://paulstephens.ddns.net",
-    "adapterName" : "lan",
-    "dnsAddresses" : ["208.67.222.123","208.67.220.123"]
+    "adapterName": "lan",
+    "dnsProvider": [
+        {
+            "name": "Cloudflare",
+            "servers": [
+                "1.1.1.1",
+                "1.0.0.1"
+            ]
+        },
+        {
+            "name": "OpenDNS",
+            "servers": [
+                "208.67.222.123",
+                "208.67.220.123"
+            ]
+        }
+    ]
 }

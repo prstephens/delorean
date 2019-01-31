@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-const initialState = { openSnackbar: false, snackbarMessage: '', isOn: false, dialogTitle: 'Title', dialogMessage: null, loading: true }
+const initialState = { openSnackbar: false, snackbarMessage: '', isOn: false, dialogTitle: 'Title', dialogMessage: null, loading: true, dnsProvidor: '' }
 
 const delorean = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -33,14 +33,14 @@ const delorean = (state = initialState, action = {}) => {
         isOn: action.data.ison,
         loading: action.loading
       }
-    case 'GET_IS_DNSSET_RECEIVED':
-      return {
-        ...state,
-        isDnsSet: action.data.isdnsset,
-        loading: action.loading
-      }
+    case 'GET_WHICH_DNS_RECEIVED':
+    return {
+      ...state,
+      dnsProvider: action.data.whichdns,
+      loading: action.loading
+    }
     case 'GET_IS_TIMEMACHINE_ON_ERROR':
-    case 'GET_IS_DNSSET_ERROR':
+    case 'GET_WHICH_DNS_ERROR':
     case 'POST_TIMEMACHINE_ON_ERROR':
     case 'POST_TIMEMACHINE_ON_SLEEP':
     case 'POST_TIMEMACHINE_OFF_ERROR':

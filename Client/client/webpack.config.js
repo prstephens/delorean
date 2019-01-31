@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const path = require('path') // nodejs dependency when dealing with paths
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin') // require webpack plugin

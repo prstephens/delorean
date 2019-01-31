@@ -23,14 +23,14 @@ const dataService = store => next => action => {
         case 'POST_TIMEMACHINE_OFF':
             getApi(baseUrl + 'off', 'POST_TIMEMACHINE_OFF', 'post', 'Shutdown Requested')
             break
-        case 'GET_IS_DNSSET':
-            getApi(baseUrl + 'isdnsset', 'GET_IS_DNSSET', 'get')
+        case 'GET_WHICH_DNS':
+            getApi(baseUrl + 'dns/which', 'GET_WHICH_DNS', 'get')
             break
         case 'POST_TIMEMACHINE_SETDNS':
-            getApi(baseUrl + 'setdns', 'POST_TIMEMACHINE_SETDNS', 'post', 'DNS Override Requested')
+            getApi(baseUrl + `dns/set/${action.provider}`, 'POST_TIMEMACHINE_SETDNS', 'post', `${action.provider} DNS Override Requested`)
             break
         case 'POST_TIMEMACHINE_RESETDNS':
-            getApi(baseUrl + 'resetdns', 'POST_TIMEMACHINE_RESETDNS', 'post', 'DNS Reset Requested')
+            getApi(baseUrl + 'dns/reset', 'POST_TIMEMACHINE_RESETDNS', 'post', 'DNS Reset Requested')
             break
         default:
             break

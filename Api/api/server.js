@@ -41,30 +41,27 @@ router.post('/timemachine/restart', (req, res, next) => {
 });
 
 router.get('/timemachine/ison', (req, res, next) => {
-	service.isTimeMachineOn().then(isOn => { return res.json({ ison: isOn }); });
-});
-
-router.get('/timemachine/isdnsset', (req, res, next) => {
-	let isDnsSet = false;
-	service.isDnsSet().then(data => {
-		if (data.length > 0) {
-			isDnsSet = true;
-		}
-
-		return res.json({ isdnsset: isDnsSet });
-
-	}).catch(err => {
-		console.error(err.stack);
+	service.isTimeMachineOn().then(isOn => { 
+			return res.json({ ison: isOn }); 
 	});
 });
 
-router.post('/timemachine/setdns', (req, res, next) => {
-	service.toggleDns('set');
+router.get('/timemachine/dns/which', (req, res, next) => {
+	service.getDnsProvider().then(provider => {
+		console.log(provider);
+		return res.json({ whichdns: provider });
+	});
+});
+
+router.post('/timemachine/dns/set/:provider', (req, res, next) => {
+	let provider = req.params.provider;
+
+	service.setDns(provider);
 	return res.json({ message: 'DNS Override requested' });
 });
 
-router.post('/timemachine/resetdns', (req, res, next) => {
-	service.toggleDns('reset');
+router.post('/timemachine/dns/reset', (req, res, next) => {
+	service.resetDns();
 	return res.json({ message: 'DNS Reset requested' });
 });
 
