@@ -9,7 +9,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import pink from '@material-ui/core/colors/pink';
 
-import RestartIcon from '@material-ui/icons/AutoRenew';
+import RestartIcon from '@material-ui/icons/Autorenew';
 import PowerIcon from '@material-ui/icons/PowerSettingsNew';
 import SleepIcon from '@material-ui/icons/AirlineSeatIndividualSuite';
 
