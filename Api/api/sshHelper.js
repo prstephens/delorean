@@ -16,8 +16,8 @@ const sendCommandReadOutput = (cmds, options) =>
                 },
                 exit: code => {
                     if (code != 0) {
-                        console.log(new Error('exit code: ' + code));
-                        reject(new Error('exit code: ' + code));
+                        console.log(new Error('[SSH Helper] - exit code: ' + code));
+                        reject(new Error('[SSH Helper] - exit code: ' + code));
                     }
               
                     resolve(data);

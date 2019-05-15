@@ -4,12 +4,12 @@
   "description": "nodejs api",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "is-port-reachable": "^2.0.0",
+    "is-port-reachable": "^2.0.1",
     "simple-ssh": "^1.0.0",
-    "wol": "^1.0.5"
+    "wol": "^1.0.6"
   },
   "devDependencies": {},
   "scripts": {
