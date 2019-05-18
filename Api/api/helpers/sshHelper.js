@@ -1,5 +1,6 @@
 'use strict'
 const SSH = require('simple-ssh');
+const log = require('../logger');
 
 const sendCommandReadOutput = (cmds, options) =>
 {
@@ -8,15 +9,15 @@ const sendCommandReadOutput = (cmds, options) =>
 
     return new Promise( (resolve, reject) => {
         cmds.forEach(cmd => {
-            console.log('[SSH Helper] - calling: ' + cmd);
+            log.info('[SSH Helper] - calling: ' + cmd);
             ssh.exec(cmd, {
                 out: stdout => {
-                    console.log('[SSH Helper] - stdout: ' + stdout);
+                    log.info('[SSH Helper] - stdout: ' + stdout);
                     data += Strings.orEmpty( stdout );
                 },
                 exit: code => {
                     if (code != 0) {
-                        console.log(new Error('[SSH Helper] - exit code: ' + code));
+                        log.error(new Error('[SSH Helper] - exit code: ' + code));
                         reject(new Error('[SSH Helper] - exit code: ' + code));
                     }
               
@@ -24,7 +25,7 @@ const sendCommandReadOutput = (cmds, options) =>
                 },
                 err: err => {
                     ssh.end();
-                    console.log('[!] SSH Error : ', err);
+                    log.error('[!] SSH Error : ', err);
                     reject(err);
                 }
             }).start();

@@ -1,14 +1,19 @@
 'use strict'
 const config = require('./config/config.json');
-const service = require('./service.js');
+const service = require('./services/service.js');
+const log = require('./logger');
 
 let express = require('express');
 let bodyParser = require('body-parser');
 let cors = require('cors');
+const morgan = require('morgan');
 
 const port = process.env.PORT || 8081;
 
 let app = express();
+
+// log HTTP via morgan using winston transports
+app.use(morgan('combined', { stream: log.stream }));
 
 app.use(cors({
 	origin: config.origin
@@ -41,6 +46,7 @@ router.post('/timemachine/restart', (req, res, next) => {
 });
 
 router.get('/timemachine/ison', (req, res, next) => {
+	log.info('called ison');
 	service.isTimeMachineOn().then(isOn => { 
 			return res.json({ ison: isOn }); 
 	});
@@ -70,4 +76,4 @@ app.use('/', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log('Magic happens on port ' + port);
+log.info('Magic happens on port %s', port);
