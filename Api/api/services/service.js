@@ -1,9 +1,9 @@
 'use strict'
-const config = require('./config/config.json');
-const sshHelper = require('./sshHelper.js');
-
+const config = require('../config/config.json');
+const sshHelper = require('../helpers/sshHelper.js');
 const isReachable = require('is-port-reachable');
 const wol = require('wol');
+const log = require('../logger');
 
 const sshOptions = {
     host: config.timemachineHostname,
@@ -17,7 +17,7 @@ const isTimeMachineOn = () => {
 
 const wakeTimemachine = () => {
     wol.wake(config.timemachineMAC, (err, res) => {
-        console.log(res);
+        log.info(res);
     });
 };
 
@@ -57,7 +57,7 @@ const isDnsSet = async () => {
 
     cmds.push('ipconfig /all | findstr /R \"' + serverStr + '\"');
 
-    console.log(cmds);
+    log.info(cmds);
     return await sshHelper.sendCommandReadOutput(cmds, sshOptions);
 };
 
@@ -75,7 +75,7 @@ const getDnsProvider = () => {
                 resolve(dnsProvider);
             }
         }).catch(err => {
-            console.error(err.stack);
+            log.error(err.stack);
         });
     });
 };
