@@ -31,15 +31,5 @@ export default [
         res.status(200).json({ message: 'DNS Reset requested' });
       }
     ]
-  },
-  {
-    path: "/timemachine/dns/which",
-    method: "post",
-    handler: [
-      async (req: Request, res: Response) => {
-        const providor = await getDnsProvider();
-        res.status(200).json({ whichdns: providor });
-      }
-    ]
-  },
+  }
 ];

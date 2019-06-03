@@ -2,6 +2,12 @@ import { sendCommandReadOutput } from "../../utils";
 import config from "config";
 import { logger } from "../../middleware/logger";
 
+const sshOptions = {
+  host: config.get('timemachineHostname'),
+  user: config.get('timemachineUsername'),
+  pass: process.env.TM_PASS
+};
+
 export const getDnsProvider = async () => {
   let dnsProvider = '';
   let ip = '';
@@ -32,19 +38,19 @@ export const setDns = async (provider: string) => {
       cmds.push(`netsh interface ipv4 add dnsservers ${config.get('adapterName')} ${dnsAddress}`);
   });
 
-  await sendCommandReadOutput(cmds);
+  await sendCommandReadOutput(cmds, sshOptions);
 };
 
 export const resetDns = async () => {
   let cmds = [`netsh interface ip set dns ${config.get('adapterName')} dhcp`];
-  await sendCommandReadOutput(cmds);
+  await sendCommandReadOutput(cmds, sshOptions);
 };
 
 // PRIVATE FUNCTIONS
 
 const callDnsFinder = async () => {
   const cmd = ['ipconfig /all | findstr /R Servers'];
-  return await sendCommandReadOutput(cmd);
+  return await sendCommandReadOutput(cmd, sshOptions);
 };
 
 const getDnsServersByProvider = (providerList: any[], provider: string) => {

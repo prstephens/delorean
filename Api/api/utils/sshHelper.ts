@@ -1,14 +1,7 @@
 import SSH from "simple-ssh";
 import { logger } from "../middleware/logger";
-import config from "config";
 
-const sshOptions = {
-    host: config.get('timemachineHostname'),
-    user: config.get('timemachineUsername'),
-    pass: process.env.TM_PASS
-  };
-
-export const sendCommandReadOutput = (cmds: string[]) =>
+export const sendCommandReadOutput = (cmds: string[], sshOptions: any) =>
 {
     const ssh = new SSH(sshOptions);
     let data ='';

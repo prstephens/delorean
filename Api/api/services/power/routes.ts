@@ -51,5 +51,5 @@ export default [
         res.status(200).json({ message: 'Restart requested' });
       }
     ]
-  },
+  }
 ];
