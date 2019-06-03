@@ -4,7 +4,7 @@ import { getDnsProvider, setDns, resetDns} from "./dnsController";
 export default [
   {
     path: "/timemachine/dns/which",
-    method: "post",
+    method: "get",
     handler: [
       async (req: Request, res: Response) => {
         const providor = await getDnsProvider();

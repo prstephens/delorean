@@ -3,7 +3,6 @@ import { logger } from "./middleware/logger";
 import { applyMiddleware, applyRoutes } from "./utils";
 import routes from "./services";
 import express from "express";
-import config from "config";
 
 const port = process.env.PORT || 8081;
 
