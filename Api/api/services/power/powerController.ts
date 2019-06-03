@@ -3,6 +3,12 @@ import wol from "wol";
 import { sendCommandReadOutput } from "../../utils/";
 import config from "config";
 
+const sshOptions = {
+  host: config.get('timemachineHostname'),
+  user: config.get('timemachineUsername'),
+  pass: process.env.TM_PASS
+};
+
 export const isTimeMachineOn = async () => {
   let hostname = config.get('timemachineHostname');
 
@@ -20,7 +26,7 @@ export const offTimemachine = async () => {
       'shutdown /s /f /t 0'
   ];
 
-  const result = await sendCommandReadOutput(cmds);
+  const result = await sendCommandReadOutput(cmds, sshOptions);
   console.log(result);
 };
 
@@ -30,7 +36,7 @@ export const sleepTimemachine = async () => {
       'rundll32.exe powrprof.dll,SetSuspendState 0,1,0'
   ];
 
-  await sendCommandReadOutput(cmds);
+  await sendCommandReadOutput(cmds, sshOptions);
 };
 
 export const restartTimemachine = async () => {
@@ -38,5 +44,5 @@ export const restartTimemachine = async () => {
       'shutdown /r /f /t 0'
   ];
 
-  await sendCommandReadOutput(cmds);
+  await sendCommandReadOutput(cmds, sshOptions);
 };
