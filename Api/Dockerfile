@@ -17,4 +17,4 @@ COPY ./api /usr/src/nodeapi
 
 EXPOSE 8081
 
-CMD ["node", "server.js"]
+CMD ["node", "./dist/server.js"]
