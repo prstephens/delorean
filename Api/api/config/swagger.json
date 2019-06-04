@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Delorean Nodejs API",
+        "description": "API for Delorean application",
+        "version": "1.0.0"
+    },
+    "server": [
+        {
+            "url": "https://api-paulstephens.ddns.net/",
+            "description": "Production server"
+        },
+        {
+            "url": "http://localhost:8081/",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/timemachine/ison": {
+            "get": {
+                "description": "Returns true or false depending if the host is on or off",
+                "responses": {
+                    "200": {
+                        "description": "True or False"
+                    },
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "ison": {
+                                      "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
