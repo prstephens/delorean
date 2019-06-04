@@ -5,8 +5,7 @@ WORKDIR /usr/src/nodeapi
 COPY ./api /usr/src/nodeapi
 
 RUN npm install --only=production --unsafe-perm
-RUN npm install typescript -g --unsafe-perm
-RUN tsc
+RUN ./node_modules/.bin/tsc
 
 EXPOSE 8081
 
