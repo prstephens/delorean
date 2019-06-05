@@ -1,42 +1,219 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "Delorean Nodejs API",
-        "description": "API for Delorean application",
-        "version": "1.0.0"
+      "title": "Delorean Nodejs API",
+      "description": "API for Delorean application",
+      "version": "1.0.0"
     },
-    "server": [
-        {
-            "url": "https://api-paulstephens.ddns.net/",
-            "description": "Production server"
-        },
-        {
-            "url": "http://localhost:8081/",
-            "description": "Development server"
-        }
+    "servers": [
+      {
+        "url": "https://api-paulstephens.ddns.net/",
+        "description": "Production server"
+      },
+      {
+        "url": "http://localhost:8081/",
+        "description": "Development server"
+      }
+    ],
+    "tags": [
+      {
+        "name": "power",
+        "description": "Power options to control the PC"
+      },
+      {
+        "name": "DNS",
+        "description": "Change DNS settings"
+      }
     ],
     "paths": {
-        "/timemachine/ison": {
-            "get": {
-                "description": "Returns true or false depending if the host is on or off",
-                "responses": {
-                    "200": {
-                        "description": "True or False"
-                    },
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "ison": {
-                                      "type": "boolean"
-                                    }
-                                }
-                            }
-                        }
+      "/timemachine/ison": {
+        "get": {
+          "tags": [
+            "power"
+          ],
+          "description": "Returns true or false depending if the host is on or off",
+          "responses": {
+            "200": {
+              "description": "True or False",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "ison": {
+                        "type": "boolean"
+                      }
                     }
+                  }
                 }
+              }
             }
+          }
         }
+      },
+      "/timemachine/on": {
+        "post": {
+          "tags": [
+            "power"
+          ],
+          "description": "Powers on the PC by calling Wake on Lan  (WOL)",
+          "responses": {
+            "200": {
+              "description": "WOL was requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/off": {
+        "post": {
+          "tags": [
+            "power"
+          ],
+          "description": "Powers off the PC",
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/sleep": {
+        "post": {
+          "tags": [
+            "power"
+          ],
+          "description": "Put the PC to sleep",
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/restart": {
+        "post": {
+          "tags": [
+            "power"
+          ],
+          "description": "Restarts the PC",
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/dns/set/{provider}": {
+        "post": {
+          "tags": [
+            "DNS"
+          ],
+          "description": "Sets the DNS provider",
+          "operationId": "updateDnsProvider",
+          "parameters": [
+            {
+              "name": "provider",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The provider"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/dns/which": {
+        "get": {
+          "tags": [
+            "DNS"
+          ],
+          "description": "Returns what DNS provider has been set",
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/timemachine/dns/reset": {
+        "post": {
+          "tags": [
+            "DNS"
+          ],
+          "description": "Resets the PC's DNS settings to default (ISP)",
+          "responses": {
+            "200": {
+              "description": "Requested successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ResponseMessage"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "ResponseMessage": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
-}
+  }
