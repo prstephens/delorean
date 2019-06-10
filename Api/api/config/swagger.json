@@ -144,7 +144,8 @@
               "in": "path",
               "required": true,
               "schema": {
-                "type": "string"
+                "type": "string",
+                "enum": ["Cloudflare", "OpenDNS"]
               },
               "description": "The provider"
             }
@@ -175,7 +176,12 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/ResponseMessage"
+                    "type": "object",
+                    "properties": {
+                      "whichdns": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
               }
