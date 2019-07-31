@@ -49,7 +49,7 @@ export const resetDns = async () => {
 // PRIVATE FUNCTIONS
 
 const callDnsFinder = async () => {
-  const cmd = ['ipconfig /all | findstr /R Servers'];
+  const cmd = ['echo | nslookup | findstr Address'];
   return await sendCommandReadOutput(cmd, sshOptions);
 };
 
