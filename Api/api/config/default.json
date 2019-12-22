@@ -1,8 +1,8 @@
 {
     "timemachineUsername": "paul",
     "timemachineMAC": "1C:1B:0D:6F:74:F2",
-    "timemachineHostname": "192.168.1.90",
-    "origin": "https://paulstephens.ddns.net",
+    "timemachineHostname": "192.168.1.88",
+    "origin": "http://localhost",
     "adapterName": "lan",
     "dnsProvider": [
         {

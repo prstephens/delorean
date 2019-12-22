@@ -25,8 +25,6 @@ let app = express();
 applyMiddleware(middleware, app);
 applyRoutes(routes, app);
 
-app.disable('x-powered-by');
-
 // START THE SERVER
 // =============================================================================
 app.listen(port);

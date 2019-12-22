@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router} from "express";
 import cors from "cors";
 import parser from "body-parser";
 import config from "config";
@@ -12,4 +12,8 @@ export const handleCors = (router: Router) => {
 export const handleBodyRequestParsing = (router: Router) => {
   router.use(parser.urlencoded({ extended: true }));
   router.use(parser.json());
+};
+
+export const handleHttpHeaders = (app: any) => {
+  app.disable('x-powered-by');
 };

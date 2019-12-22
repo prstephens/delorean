@@ -1,6 +1,7 @@
 import {
     handleCors,
     handleBodyRequestParsing,
+    handleHttpHeaders
   } from "./common";
 
   import { applyLogger } from "../utils/";
@@ -9,6 +10,7 @@ import {
   export default [
     handleCors,
     handleBodyRequestParsing,
+    handleHttpHeaders,
     applyLogger,
     handleAPIDocs
   ];
