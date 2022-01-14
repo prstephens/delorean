@@ -3,6 +3,7 @@ import { logger } from "./middleware/logger";
 import { applyMiddleware, applyRoutes } from "./utils";
 import routes from "./services";
 import express from "express";
+import http from "http";
 
 const port = process.env.PORT || 8081;
 
@@ -27,5 +28,5 @@ applyRoutes(routes, app);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
+http.createServer(app).listen(port);
 logger.info('Magic happens on port %s', port);
