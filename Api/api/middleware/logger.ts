@@ -20,7 +20,7 @@ export const logger = winston.createLogger({
 		new winston.transports.File({ filename: 'logs/combined.log' })
 	],
 
-	exitOnError: false, // do not exit on handled exceptions
+	exitOnError: true, // do not exit on handled exceptions
 
 });
 
